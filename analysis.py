@@ -28,11 +28,21 @@ def filter_by_odds_and_rank(df: pd.DataFrame, min_odds: float) -> pd.DataFrame:
     return df[(df['単勝オッズ'] >= min_odds) & (df['確定着順'] <= 3)]
 
 def analyze_trends(df: pd.DataFrame) -> None:
-    """簡単な傾向を表示する"""
-    print('場所別件数:')
-    print(df['場所'].value_counts())
-    print('\nクラスコード別件数:')
-    print(df['クラスコード'].value_counts())
+    """簡単な傾向を表示する
+
+    場所別およびクラスコード別の割合を計算して表示する。
+    """
+
+    # 場所ごとの割合を計算
+    location_ratio = df['場所'].value_counts(normalize=True) * 100
+    print('場所別割合(%):')
+    print(location_ratio.round(2))
+
+    # クラスコードごとの割合を計算
+    class_ratio = df['クラスコード'].value_counts(normalize=True) * 100
+    print('\nクラスコード別割合(%):')
+    print(class_ratio.round(2))
+
     print('\n平均オッズ:', df['単勝オッズ'].mean())
 
 def main() -> None:
